@@ -1,0 +1,5 @@
+.DS_Store
+coderich-util.sublime-workspace
+out
+node_modules
+coverage

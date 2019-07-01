@@ -1,0 +1,14 @@
+{
+  "name": "@coderich/util",
+  "version": "0.0.1",
+  "description": "Coderich Utilities",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Richard Livolsi",
+  "license": "ISC",
+  "dependencies": {
+    "rxjs": "^6.5.2"
+  }
+}
