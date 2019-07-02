@@ -6,8 +6,6 @@ export default class Action {
     this.type = type;
     this.operators = [mergeMap(worker)];
     this.toString = () => `${type}`;
-
-    // Subjects
     this.subjects = {
       request: new Subject().pipe(share()),
       success: new Subject().pipe(share()),
@@ -39,10 +37,5 @@ export default class Action {
     const obj = typeof fnOrObj === 'function' ? { request: fnOrObj, success: fnOrObj, error: fnOrObj } : fnOrObj;
     Object.entries(obj).forEach(([key, subscriber]) => subscription.add(this.subjects[key].subscribe(subscriber)));
     return subscription;
-  }
-
-  listen(subscriber) {
-    this.subscribe(subscriber);
-    return this;
   }
 }
