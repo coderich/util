@@ -1,14 +1,19 @@
 {
   "name": "@coderich/util",
   "version": "0.0.1",
+  "author": "Richard Livolsi",
   "description": "Coderich Utilities",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Richard Livolsi",
   "license": "ISC",
+  "scripts": {
+    "test": "ratchet test",
+    "lint": "ratchet lint",
+    "ratchet": "ratchet"
+  },
   "dependencies": {
     "rxjs": "^6.5.2"
+  },
+  "devDependencies": {
+    "@coderich/ratchet": "^1.1.7"
   }
 }
