@@ -15,43 +15,29 @@ export default class Action {
     };
   }
 
-  chain(action) {
-    const worker = mergeMap(val => action.dispatch(val));
-    this.operators.push(worker);
-    return () => (this.operators.splice(this.operators.indexOf(worker), 1));
-  }
-
   pipe(operator) {
-    this.operators.push(operator);
-    return () => (this.operators.splice(this.operators.indexOf(operator), 1));
+    const worker = operator instanceof Action ? mergeMap(val => operator.dispatch(val)) : operator;
+    this.operators.push(worker);
+    return () => this.operators.splice(this.operators.indexOf(worker), 1); // Unpipe
   }
 
   dispatch(payload, meta = {}) {
-    // Signal the start of the action
-    this.subjects.request.next({ type: `${this.type}:request`, payload, meta });
+    this.subjects.request.next({ type: `${this.type}:request`, payload, meta }); // Request
 
     const stream = of(payload).pipe(...this.operators);
 
     stream.subscribe({
-      next: value => this.subjects.success.next({ type: `${this.type}:success`, payload: value, meta }),
-      error: err => this.subjects.error.next({ type: `${this.type}:error`, payload: err, meta, error: true }),
+      next: value => this.subjects.success.next({ type: `${this.type}:success`, payload: value, meta }), // Success
+      error: err => this.subjects.error.next({ type: `${this.type}:error`, payload: err, meta, error: true }), // Error
     });
 
     return stream;
   }
 
-  subscribe(subscriberObj) {
-    if (typeof subscriberObj === 'function') {
-      subscriberObj = {
-        request: subscriberObj,
-        success: subscriberObj,
-        error: subscriberObj,
-      };
-    }
-
-    // Combined subscriptions
+  subscribe(fnOrObj) {
     const subscription = new Subscription();
-    Object.entries(subscriberObj).forEach(([key, subscriber]) => { subscription.add(this.subjects[key].subscribe(subscriber)); });
+    const obj = typeof fnOrObj === 'function' ? { request: fnOrObj, success: fnOrObj, error: fnOrObj } : fnOrObj;
+    Object.entries(obj).forEach(([key, subscriber]) => subscription.add(this.subjects[key].subscribe(subscriber)));
     return subscription;
   }
 

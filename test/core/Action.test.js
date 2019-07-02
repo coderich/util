@@ -118,8 +118,8 @@ describe('Action Class', () => {
       },
     });
 
-    action1.chain(action2);
-    action1.chain(action3);
+    action1.pipe(action2);
+    action1.pipe(action3);
     action1.dispatch(1);
   });
 
@@ -140,8 +140,8 @@ describe('Action Class', () => {
       },
     });
 
-    action1.chain(action2)();
-    action1.chain(action3);
+    action1.pipe(action2)();
+    action1.pipe(action3);
     action1.dispatch(1);
   });
 
@@ -162,8 +162,8 @@ describe('Action Class', () => {
       },
     });
 
-    action1.chain(action2);
-    action1.chain(action3)();
+    action1.pipe(action2);
+    action1.pipe(action3)();
     action1.dispatch(1);
   });
 
@@ -184,8 +184,8 @@ describe('Action Class', () => {
       },
     });
 
-    action1.chain(action2)();
-    action1.chain(action3)();
+    action1.pipe(action2)();
+    action1.pipe(action3)();
     action1.dispatch(1);
   });
 });
