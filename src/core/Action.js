@@ -6,7 +6,7 @@ export default class Action extends Model {
   constructor(type, worker = async a => a) {
     super();
 
-    this.bind({
+    this.defineProperties({
       type,
       operators: [mergeMap(worker)],
       subjects: {
