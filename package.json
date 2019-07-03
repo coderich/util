@@ -1,6 +1,6 @@
 {
   "name": "@coderich/util",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Richard Livolsi",
   "description": "Coderich Utilities",
   "main": "index.js",
